@@ -84,7 +84,7 @@ foreach $member(keys %member_tree){
 	}
 	if ($pid == 0) {
 		#2. AddOrReplaceReadGroups
-		`$java -Xmx20g -jar $picard AddOrReplaceReadGroups I="./$project_name/$member/$member.sorted.bam" O="./$project_name/$member/$member.sorted.RG.bam" RGID="1" RGLB=$member"L" RGPL=illimina RGPU=run RGSM=$member`;
+		`$java -Xmx20g -jar $picard AddOrReplaceReadGroups I="./$project_name/$member/$member.sorted.bam" O="./$project_name/$member/$member.sorted.RG.bam" RGID="1" RGLB=$member"L" RGPL=illumina RGPU=run RGSM=$member`;
 		#3. MarkDuplicates
 		`$java -Xmx20g -jar $picard MarkDuplicates I="./$project_name/$member/$member.sorted.RG.bam" O="./$project_name/$member/$member.sorted.RG.markdup.bam" M="./$project_name/$member/$member.markdup.metrics" CREATE_INDEX=true REMOVE_DUPLICATES=true`;	
 		#4. BaseRecalibration Calculate
