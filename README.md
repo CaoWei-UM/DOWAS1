@@ -17,8 +17,6 @@ perl run.pl example.xml thread_num
 ## Availability
 DOWAS is released under MIT license. The latest version of DOWAS can be downloaded at www.sustc-genome.edu.cn. 
 
-## Author
-DOWAS is written by Chen Kaijing, Chen Yangran, ChenRui and Cao Wei.
 
 
 ## Software and database dependencies
@@ -43,13 +41,16 @@ Mills_indel database
 Human genome sequence reference
 ## Seeking help
 If you have questions about DOWAS, you may send the questions to chenyr@mail.sustc.edu.cn or chenkj@mail.sustc.edu.cn or 11749245@mail.sustc.edu.cn or caow@mail@sustc.edu.cn . You may also ask questions in forums such as BioStar and SEQanswers.
-## update info
-### DOWAS v1.0.1:
+## Update info
+#### DOWAS v1.0.1:
 We remove the dependency software in DOWAS package to reduce the size of DOWAS and avoid copyright problem, now you need to download those specified version softwares and write address of them in configuration xml file. 
-### DOWAS v1.0.2: 
+#### DOWAS v1.0.2: 
 We changed sequence extract function in our code to reduce about one day’s DOWAS running time.
-### DOWAS v1.0.3:
+#### DOWAS v1.0.3:
 We add a thread number parameter to let user choose a suitable thread number to run DOWAS. And we use pipeline in mapping period to reduce IO spending.
+
+## Author
+DOWAS is written by Chen Kaijing, Chen Yangran, ChenRui and Cao Wei.
 ## Reference
 •	Li H. and Durbin R. (2009) Fast and accurate short read alignment with Burrows-Wheeler Transform. Bioinformatics, 25:1754-60. [PMID: 19451168] 
 
