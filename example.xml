@@ -1,0 +1,29 @@
+<configuration>
+	<rawdata_list>
+		<offspring1 R1="/2/rawdata/CCR5_human/family6/WGS/preimplantation_embryo/P6-1_S1_L003_R1_001.fastq" R2="/2/rawdata/CCR5_human/family6/WGS/preimplantation_embryo/P6-1_S1_L003_R2_001.fastq"></offspring1>
+		<offspring1 R1="/2/rawdata/CCR5_human/family6/WGS/preimplantation_embryo/P6-1_S1_L004_R1_001.fastq.gz" R2="/2/rawdata/CCR5_human/family6/WGS/preimplantation_embryo/P6-1_S1_L004_R2_001.fastq.gz"></offspring1>
+		<offspring1 R1="/2/rawdata/CCR5_human/family6/WGS/preimplantation_embryo/P6-1_S1_L005_R1_001.fastq.gz" R2="/2/rawdata/CCR5_human/family6/WGS/preimplantation_embryo/P6-1_S1_L005_R2_001.fastq.gz"></offspring1>
+		<offspring2 R1="/2/rawdata/CCR5_human/family6/WGS/preimplantation_embryo/P6-2_S2_L003_R1_001.fastq.gz" R2="/2/rawdata/CCR5_human/family6/WGS/preimplantation_embryo/P6-2_S2_L003_R2_001.fastq.gz"></offspring2>
+		<offspring2 R1="/2/rawdata/CCR5_human/family6/WGS/preimplantation_embryo/P6-2_S2_L004_R1_001.fastq.gz" R2="/2/rawdata/CCR5_human/family6/WGS/preimplantation_embryo/P6-2_S2_L004_R2_001.fastq.gz"></offspring2>
+		<offspring2 R1="/2/rawdata/CCR5_human/family6/WGS/preimplantation_embryo/P6-2_S2_L005_R1_001.fastq.gz" R2="/2/rawdata/CCR5_human/family6/WGS/preimplantation_embryo/P6-2_S2_L005_R2_001.fastq.gz"></offspring2>
+		<offspring4 R1="/2/rawdata/CCR5_human/family6/WGS/preimplantation_embryo/P6-4_S3_L003_R1_001.fastq.gz" R2="/2/rawdata/CCR5_human/family6/WGS/preimplantation_embryo/P6-4_S3_L003_R2_001.fastq.gz"></offspring4>
+		<offspring4 R1="/2/rawdata/CCR5_human/family6/WGS/preimplantation_embryo/P6-4_S3_L004_R1_001.fastq.gz" R2="/2/rawdata/CCR5_human/family6/WGS/preimplantation_embryo/P6-4_S3_L004_R2_001.fastq.gz"></offspring4>
+		<offspring4 R1="/2/rawdata/CCR5_human/family6/WGS/preimplantation_embryo/P6-4_S3_L005_R1_001.fastq.gz" R2="/2/rawdata/CCR5_human/family6/WGS/preimplantation_embryo/P6-4_S3_L005_R2_001.fastq.gz"></offspring4>
+		<father R1="/2/rawdata/CCR5_human/family6/WGS/parents/B17123093468-YH006-35-SR17146-WGS_S1_L004_R1_001.fastq.gz" R2="/2/rawdata/CCR5_human/family6/WGS/parents/B17123093468-YH006-35-SR17146-WGS_S1_L004_R2_001.fastq.gz"></father>
+		<mother R1="/2/rawdata/CCR5_human/family6/WGS/parents/B17123093469-YH006-35-SR17146-WGS_S1_L003_R1_001.fastq.gz" R2="/2/rawdata/CCR5_human/family6/WGS/parents/B17123093469-YH006-35-SR17146-WGS_S1_L003_R2_001.fastq.gz"></mother>
+	</rawdata_list>
+	<refdata_list>
+		<gatk3_8>./bin/GATK_3.8/GenomeAnalysisTK.jar</gatk3_8>
+		<gatk4>./bin/gatk-4.0.4.0/gatk-package-4.0.4.0-local.jar</gatk4>
+		<picard>./bin/picard.jar</picard>
+		<samtools>./bin/samtools</samtools>
+		<bwa>./bin/bwa</bwa>
+		<java>./bin/picard.jar</java>
+		<fastp>./bin/fastp</fastp>
+		<reference>/4/caow/ref/hg19.fa</reference>
+		<guide_RNA_seq>ATGTCAGTCATAGTTAAGAC</guide_RNA_seq>
+		<dbsnp>/4/caow/ref/dbsnp_138.hg19.vcf</dbsnp>
+		<OneKG_indel>/4/caow/ref/1000G_phase1.indels.hg19.sites.vcf</OneKG_indel>
+		<Mills_indel>/4/caow/ref/Mills_and_1000G_gold_standard.indels.hg19.sites.vcf</Mills_indel>
+	</refdata_list>
+</configuration>
