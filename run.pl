@@ -53,6 +53,12 @@ $reference="./$project_name/reference/$reference_prefix.fa";
 `$java -jar $gatk4 IndexFeatureFile -F $Mills_indel`;
 $bwa_reference="./$project_name/reference/$reference_prefix.fa";
 
+if($thread_num>16){
+	$samtools_thread_num=16;
+}else{
+	$samtools_thread_num=$thread_num;
+}
+$samtools_memory=int(100/$samtools_thread_num).'G';
 #qualify, mapping and sort data
 foreach $member(keys %member_tree){
 	mkdir("./$project_name/$member") unless(-d "./$project_name/$member");
@@ -63,14 +69,13 @@ foreach $member(keys %member_tree){
 		$names=${\split(/\//,${$lane}{R1})};
 		`$fastp -w $thread_num -c -h "./$project_name/metadata/$member.$names.qc.html" -i ${$lane}{R1} -o "./$project_name/$member/temp.r1.qc.fq.gz" -I ${$lane}{R2} -O "./$project_name/$member/temp.r2.qc.fq.gz"`;
 		`$bwa mem -t $thread_num -M $bwa_reference ./$project_name/$member/temp.r1.qc.fq.gz ./$project_name/$member/temp.r2.qc.fq.gz | $samtools view -@ $thread_num -bS - > "./$project_name/$member/temp.$merge_count.bam"`;
-		`$samtools sort -m 20G -@ $thread_num "./$project_name/$member/temp.$merge_count.bam" -o "./$project_name/$member/temp.$merge_count.sorted.bam"`;
+		`$samtools sort -m $samtools_memory -@ $samtools_thread_num "./$project_name/$member/temp.$merge_count.bam" -o "./$project_name/$member/temp.$merge_count.sorted.bam"`;
 		$temp_file_list.="./$project_name/$member/temp.$merge_count.sorted.bam\n";
 	}
 	open (FILE, ">./$project_name/$member/temp_file_list.txt");
 	print FILE $temp_file_list;
 	close FILE;
-	`$samtools merge -b ./$project_name/$member/temp_file_list.txt "./$project_name/$member/temp.sorted.bam"`;
-	`$samtools sort -m 20G -@ $thread_num "./$project_name/$member/temp.sorted.bam" -o "./$project_name/$member/$member.sorted.bam"`;
+	`$samtools merge -b ./$project_name/$member/temp_file_list.txt "./$project_name/$member/$member.sorted.bam"`;
 	`rm ./$project_name/$member/temp.*`;
 }
 
@@ -84,7 +89,7 @@ foreach $member(keys %member_tree){
 	}
 	if ($pid == 0) {
 		#2. AddOrReplaceReadGroups
-		`$java -Xmx20g -jar $picard AddOrReplaceReadGroups I="./$project_name/$member/$member.sorted.bam" O="./$project_name/$member/$member.sorted.RG.bam" RGID="1" RGLB=$member"L" RGPL=illumina RGPU=run RGSM=$member`;
+		`$java -Xmx20g -jar $picard AddOrReplaceReadGroups I="./$project_name/$member/$member.sorted.bam" O="./$project_name/$member/$member.sorted.RG.bam" RGID="1" RGLB=$member"L" RGPL=illimina RGPU=run RGSM=$member`;
 		#3. MarkDuplicates
 		`$java -Xmx20g -jar $picard MarkDuplicates I="./$project_name/$member/$member.sorted.RG.bam" O="./$project_name/$member/$member.sorted.RG.markdup.bam" M="./$project_name/$member/$member.markdup.metrics" CREATE_INDEX=true REMOVE_DUPLICATES=true`;	
 		#4. BaseRecalibration Calculate
