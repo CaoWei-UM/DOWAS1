@@ -7,6 +7,17 @@ DOWAS is a perl script for find potential off-target sites from reference and ge
 You need to install some software and write them in the xml file before using DOWAS, those softwares with recommend version are list at the end of this manual.
 Xml file contain a ‘rawdata_list’ subtag, it at least contains a father tag and a mother tag which contain raw sequencing data from parents in germline.
 Final result will be saved in /your/path/example/$offspring/final_result.txt, you will get multiple offspring folder and multiple final_result.txt if you have more than one offspring.
+## Limitation of DOWAS1 and better DOWAS2
+#### Shortages of DOWAS1
+1. DOWAS1 use public reference(e.g. hg19) as mapping reference, that may lead to illusory off-target sites due to private variants in individuals.
+2. DOWAS1 use a hard filter (mismatch<= 6 with PAM=NGG and mismatch<= 4 with PAM=NAG) to judge if a variant is an off-target site.
+3. DOWAS1 cannot detect large deletions (deletions larger than 150bp in 20 kilo bases around on-target site). 
+4. DOWAS1 doesn’t report SNPs due to high false positive ratio.
+5. DOWAS1 cannot demonstrate the coverage at each potential off-target region directly.
+6. DOWAS1 doesn't consider hotspots predicted by experimental methods.
+7. The scalability of DOWAS1 is not good.
+#### DOWAS2
+To overcome those shortage, DOWAS2 is developing and it can cover shortage 1,3,5,6,7 in DOWAS1.
 ## Getting started
 ```
 cd /your/path
@@ -41,6 +52,7 @@ Mills_indel database
 Human genome sequence reference
 ## Seeking help
 If you have questions about DOWAS, you may send the questions to chenyr@mail.sustc.edu.cn or chenkj@mail.sustc.edu.cn or 11749245@mail.sustc.edu.cn or caow@mail@sustc.edu.cn . You may also ask questions in forums such as BioStar and SEQanswers.
+
 ## Update info
 #### DOWAS v1.0.1:
 We remove the dependency software in DOWAS package to reduce the size of DOWAS and avoid copyright problem, now you need to download those specified version softwares and write address of them in configuration xml file. 
