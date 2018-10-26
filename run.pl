@@ -54,11 +54,11 @@ $reference="./$project_name/reference/$reference_prefix.fa";
 $bwa_reference="./$project_name/reference/$reference_prefix.fa";
 
 if($thread_num>16){
-	$samtools_thread_num=16;
+	$fastp_thread_num=16;
 }else{
-	$samtools_thread_num=$thread_num;
+	$fastp_thread_num=$thread_num;
 }
-$samtools_memory=int(100/$samtools_thread_num).'G';
+$samtools_memory=int(100/$thread_num).'G';
 #qualify, mapping and sort data
 foreach $member(keys %member_tree){
 	mkdir("./$project_name/$member") unless(-d "./$project_name/$member");
@@ -67,9 +67,9 @@ foreach $member(keys %member_tree){
 	foreach $lane (@{$member_tree{$member}}){
 		$merge_count++;
 		$names=${\split(/\//,${$lane}{R1})};
-		`$fastp -w $thread_num -c -h "./$project_name/metadata/$member.$names.qc.html" -i ${$lane}{R1} -o "./$project_name/$member/temp.r1.qc.fq.gz" -I ${$lane}{R2} -O "./$project_name/$member/temp.r2.qc.fq.gz"`;
+		`$fastp -w $fastp_thread_num -c -h "./$project_name/metadata/$member.$names.qc.html" -i ${$lane}{R1} -o "./$project_name/$member/temp.r1.qc.fq.gz" -I ${$lane}{R2} -O "./$project_name/$member/temp.r2.qc.fq.gz"`;
 		`$bwa mem -t $thread_num -M $bwa_reference ./$project_name/$member/temp.r1.qc.fq.gz ./$project_name/$member/temp.r2.qc.fq.gz | $samtools view -@ $thread_num -bS - > "./$project_name/$member/temp.$merge_count.bam"`;
-		`$samtools sort -m $samtools_memory -@ $samtools_thread_num "./$project_name/$member/temp.$merge_count.bam" -o "./$project_name/$member/temp.$merge_count.sorted.bam"`;
+		`$samtools sort -m $samtools_memory -@ $thread_num "./$project_name/$member/temp.$merge_count.bam" -o "./$project_name/$member/temp.$merge_count.sorted.bam"`;
 		$temp_file_list.="./$project_name/$member/temp.$merge_count.sorted.bam\n";
 	}
 	open (FILE, ">./$project_name/$member/temp_file_list.txt");
