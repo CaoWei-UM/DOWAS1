@@ -18,7 +18,7 @@
 		<picard>./bin/picard.jar</picard>
 		<samtools>./bin/samtools</samtools>
 		<bwa>./bin/bwa</bwa>
-		<java>./bin/picard.jar</java>
+		<java>./bin/java</java>
 		<fastp>./bin/fastp</fastp>
 		<reference>/4/ref/hg19.fa</reference>
 		<guide_RNA_seq>ATGTCAGTCATAGTTAAGAC</guide_RNA_seq>
