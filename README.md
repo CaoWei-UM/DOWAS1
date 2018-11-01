@@ -21,8 +21,8 @@ To overcome those shortage, DOWAS2 is developing and it can cover shortage 1,3,5
 ## Getting started
 ```
 cd /your/path
-tar czvf DOWASv1.0.3.tar.gz 
-cd DOWAS v1.0.3
+tar czvf DOWASv1.0.4.tar.gz 
+cd DOWAS v1.0.4
 perl run.pl example.xml thread_num
 ```
 ## Availability
