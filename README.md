@@ -1,6 +1,6 @@
 # DOWAS manual
-### update date: 2018/10/17
-### version 1.0.3
+### update date: 2018/11/1
+### version 1.0.4
 
 ## Introduction
 DOWAS is a perl script for find potential off-target sites from reference and germline sequencing data in human. It consists of three pl scripts, run.pl will invoke other 2 scripts. All information you need to input should be written in a xml file like example.xml and run ‘perl run.pl example.xml 12’ in your computer. in that case, DOWAS will generate a folder in current path with same name with xml file (in that case it names ‘example’) and put all results in this folder and this software will use 12 threads. 
@@ -60,6 +60,8 @@ We remove the dependency software in DOWAS package to reduce the size of DOWAS a
 We changed sequence extract function in our code to reduce about one day’s DOWAS running time.
 #### DOWAS v1.0.3:
 We add a thread number parameter to let user choose a suitable thread number to run DOWAS. And we use pipeline in mapping period to reduce IO spending.
+#### DOWAS v1.0.4:
+We remove force parents data need. Now you can use offspring data with 1 parent or no parents to run DOWAS1.
 
 ## Author
 DOWAS is written by Chen Kaijing, Chen Yangran, ChenRui and Cao Wei.
