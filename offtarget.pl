@@ -18,26 +18,32 @@ $re_on=~s/M/T/g;
 $re_on=~s/C/N/g;
 $re_on=~s/G/C/g;
 $re_on=~s/N/G/g;
-open(FD,"./$project_name/father/father.vcf")||die("Can not open the file!$!n");
-open(FD1,"./$project_name/mother/mother.vcf")||die("Can not open the file!$!n");
-open(FD2,"./$project_name/$offspring/$offspring.vcf")||die("Can not open the file!$!n");
-
-#-----------------input father------------------------------------------------
+if(-e "./$project_name/father/father.vcf"){
+	open(FD,"./$project_name/father/father.vcf")||die("Can not open the file!$!n");
+	#-----------------input father------------------------------------------------
 
 
-while($line=<FD>){
-    @info=split(/\s+/,$line);
-    $key=$info[0]."_".$info[1]."_".$info[3]."_".$info[4];
-    $storefather{$key}=1;
+	while($line=<FD>){
+	    @info=split(/\s+/,$line);
+	    $key=$info[0]."_".$info[1]."_".$info[3]."_".$info[4];
+	    $storefather{$key}=1;
+	}
 }
+if(-e "./$project_name/father/father.vcf"){
+	open(FD1,"./$project_name/mother/mother.vcf")||die("Can not open the file!$!n");
+	
 #----------------------input mother-------------------------------------------------
 
-while($line1=<FD1>){
-    @info1=split(/\s+/,$line1);
-    $key=$info1[0]."_".$info1[1]."_".$info1[3]."_".$info1[4];
-    $storemother{$key}=1;
-      
+	while($line1=<FD1>){
+	    @info1=split(/\s+/,$line1);
+	    $key=$info1[0]."_".$info1[1]."_".$info1[3]."_".$info1[4];
+	    $storemother{$key}=1;
+
+	}
 }
+open(FD2,"./$project_name/$offspring/$offspring.vcf")||die("Can not open the file!$!n");
+
+
 
 
 #-------------------input offspring-------------------------------------------------------------------------------------------------------------------------
