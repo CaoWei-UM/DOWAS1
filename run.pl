@@ -26,32 +26,72 @@ $java=${${${${$xml}{'refdata_list'}}[0]}{'java'}}[0];
 $fastp=${${${${$xml}{'refdata_list'}}[0]}{'fastp'}}[0];
 #make bwa reference and single chromosome reference from reference file
 mkdir("./$project_name/reference") unless(-d "./$project_name/reference");
-`cp $reference ./$project_name/reference`;
-`cp $dbsnp ./$project_name/reference`;
-`cp $OneKG_indel ./$project_name/reference`;
-`cp $Mills_indel ./$project_name/reference`;
-@temp=split(/\//,$dbsnp);
-$dbsnp="./$project_name/reference/$temp[-1]";
-undef @temp;
-@temp=split(/\//,$OneKG_indel);
-$OneKG_indel="./$project_name/reference/$temp[-1]";
-undef @temp;
-@temp=split(/\//,$Mills_indel);
-$Mills_indel="./$project_name/reference/$temp[-1]";
-undef @temp;
-@temp=split(/\//,$reference);
-@temp=split(/\./,$temp[-1]);
-$reference_prefix=$temp[0];
-undef @temp;
-$reference="./$project_name/reference/$reference_prefix.fa";
+$reference_dict= $reference;
+$reference_dict=~s/.fa/.dict/;
+if( -e $reference ){
+	if(( -e $reference.amb ) && ( -e $reference.ann ) && ( -e $reference.bwt ) && ( -e $reference_dict ) && ( -e $reference.fai ) && ( -e $reference.pac ) && ( -e $reference.sa ) ){
 
-`$samtools faidx $reference`;
-`$bwa index $reference`;
-`$java -Xmx20g -jar $gatk4 CreateSequenceDictionary -R ./$project_name/reference/$reference_prefix.fa -O ./$project_name/reference/$reference_prefix.dict`;
-`$java -jar $gatk4 IndexFeatureFile -F $dbsnp`;
-`$java -jar $gatk4 IndexFeatureFile -F $OneKG_indel`;
-`$java -jar $gatk4 IndexFeatureFile -F $Mills_indel`;
-$bwa_reference="./$project_name/reference/$reference_prefix.fa";
+	}else{
+		@temp=split(/\//,$reference);
+		@temp=split(/\./,$temp[-1]);
+		$reference_prefix=$temp[0];
+		undef @temp;
+		if(! ((-e "./$project_name/reference/$reference_prefix.fa" )&&(-e "./$project_name/reference/$reference_prefix.dict" )&&(-e "./$project_name/reference/$reference_prefix.fa.fai" ))){
+			print $reference_prefix."\n"; 
+			`cp $reference ./$project_name/reference`;
+			$reference="./$project_name/reference/$reference_prefix.fa";
+			`$samtools faidx $reference`;
+			`$bwa index $reference`;
+			`$java -Xmx20g -jar $gatk4 CreateSequenceDictionary -R ./$project_name/reference/$reference_prefix.fa -O ./$project_name/reference/$reference_prefix.dict`;
+		}
+	}
+}else{
+	print "reference not found!\n";
+}
+
+if( -e $dbsnp ){
+	if(! -e $dbsnp.idx ){
+		@temp=split(/\//,$dbsnp);
+		$new_dbsnp="./$project_name/reference/$temp[-1]";
+		undef @temp;
+		if(! (-e $new_dbsnp )&& !(-e $new_dbsnp.idx )){
+			`cp $dbsnp ./$project_name/reference`;
+			`$java -jar $gatk4 IndexFeatureFile -F $new_dbsnp`;
+		}
+		$dbsnp=$new_dbsnp;
+	}
+}else{
+	print "dbsnp not found!\n";
+}
+
+if( -e $OneKG_indel ){
+	if(! -e $OneKG_indel.idx ){
+		@temp=split(/\//,$OneKG_indel);
+		$new_OneKG_indel="./$project_name/reference/$temp[-1]";
+		undef @temp;
+		if(! (-e $new_OneKG_indel )&& !(-e $new_OneKG_indel.idx )){
+			`cp $OneKG_indel ./$project_name/reference`;
+			`$java -jar $gatk4 IndexFeatureFile -F $new_OneKG_indel`;
+		}
+		$OneKG_indel=$new_OneKG_indel;
+	}
+}else{
+	print "OneKG_indel not found!\n";
+}
+if( -e $Mills_indel ){
+	if(! -e $Mills_indel.idx ){
+		@temp=split(/\//,$Mills_indel);
+		$new_Mills_indel="./$project_name/reference/$temp[-1]";
+		undef @temp;
+		if(! (-e $new_Mills_indel )&& !(-e $new_Mills_indel.idx )){
+			`cp $Mills_indel ./$project_name/reference`;
+			`$java -jar $gatk4 IndexFeatureFile -F $new_Mills_indel`;
+		}
+		$Mills_indel=$new_Mills_indel;
+	}
+}else{
+	print "Mills_indel not found!\n";
+}
 
 if($thread_num>16){
 	$fastp_thread_num=16;
@@ -68,7 +108,7 @@ foreach $member(keys %member_tree){
 		$merge_count++;
 		$names=${\split(/\//,${$lane}{R1})};
 		`$fastp -w $fastp_thread_num -c -h "./$project_name/metadata/$member.$names.qc.html" -i ${$lane}{R1} -o "./$project_name/$member/temp.r1.qc.fq.gz" -I ${$lane}{R2} -O "./$project_name/$member/temp.r2.qc.fq.gz"`;
-		`$bwa mem -t $thread_num -M $bwa_reference ./$project_name/$member/temp.r1.qc.fq.gz ./$project_name/$member/temp.r2.qc.fq.gz | $samtools view -@ $thread_num -bS - > "./$project_name/$member/temp.$merge_count.bam"`;
+		`$bwa mem -t $thread_num -M $reference ./$project_name/$member/temp.r1.qc.fq.gz ./$project_name/$member/temp.r2.qc.fq.gz | $samtools view -@ $thread_num -bS - > "./$project_name/$member/temp.$merge_count.bam"`;
 		`$samtools sort -m $samtools_memory -@ $thread_num "./$project_name/$member/temp.$merge_count.bam" -o "./$project_name/$member/temp.$merge_count.sorted.bam"`;
 		$temp_file_list.="./$project_name/$member/temp.$merge_count.sorted.bam\n";
 	}
