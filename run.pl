@@ -54,7 +54,7 @@ if( -e $dbsnp ){
 		@temp=split(/\//,$dbsnp);
 		$new_dbsnp="./$project_name/reference/$temp[-1]";
 		undef @temp;
-		if(! (-e $new_dbsnp )&& !(-e $new_dbsnp.idx )){
+		if(! (-e $new_dbsnp )|| !(-e $new_dbsnp.idx )){
 			`cp $dbsnp ./$project_name/reference`;
 			`$java -jar $gatk4 IndexFeatureFile -F $new_dbsnp`;
 		}
@@ -69,7 +69,7 @@ if( -e $OneKG_indel ){
 		@temp=split(/\//,$OneKG_indel);
 		$new_OneKG_indel="./$project_name/reference/$temp[-1]";
 		undef @temp;
-		if(! (-e $new_OneKG_indel )&& !(-e $new_OneKG_indel.idx )){
+		if(! (-e $new_OneKG_indel )|| !(-e $new_OneKG_indel.idx )){
 			`cp $OneKG_indel ./$project_name/reference`;
 			`$java -jar $gatk4 IndexFeatureFile -F $new_OneKG_indel`;
 		}
@@ -83,7 +83,7 @@ if( -e $Mills_indel ){
 		@temp=split(/\//,$Mills_indel);
 		$new_Mills_indel="./$project_name/reference/$temp[-1]";
 		undef @temp;
-		if(! (-e $new_Mills_indel )&& !(-e $new_Mills_indel.idx )){
+		if(! (-e $new_Mills_indel )|| !(-e $new_Mills_indel.idx )){
 			`cp $Mills_indel ./$project_name/reference`;
 			`$java -jar $gatk4 IndexFeatureFile -F $new_Mills_indel`;
 		}
