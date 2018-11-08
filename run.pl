@@ -170,7 +170,7 @@ foreach $member(keys %member_tree){
 		}
 		if ($pid == 0) {
 			`perl ./offtarget.pl $project_name $member $guide_RNA_seq $reference`;
-			`cat ./${project_name}/$member/*.txt >  ./${project_name}/$member/merge_offtarget_sites.txt`;
+			`cat ./${project_name}/${member}_node_*.txt >  ./${project_name}/${member}_merge_offtarget_sites.txt`;
 			`perl ./rm_repeat.pl ${project_name} $member`;
 			print "$member find offtaret sites end\n";
 			exit 0;
