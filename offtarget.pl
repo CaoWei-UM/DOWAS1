@@ -48,10 +48,10 @@ open(FD2,"./$project_name/$offspring/$offspring.vcf")||die("Can not open the fil
 
 #-------------------input offspring-------------------------------------------------------------------------------------------------------------------------
 mkdir("./$project_name/$offspring") unless(-d "./$project_name/$offspring");
-open FILE1, ">./$project_name/$offspring/4_node_GG.txt";
-open FILE2, ">./$project_name/$offspring/4_noin_GG.txt";
-open FILE3, ">./$project_name/$offspring/4_node_AG.txt";
-open FILE4, ">./$project_name/$offspring/4_noin_AG.txt";
+open FILE1, ">./$project_name/${offspring}_node_GG.txt";
+open FILE2, ">./$project_name/${offspring}_noin_GG.txt";
+open FILE3, ">./$project_name/${offspring}_node_AG.txt";
+open FILE4, ">./$project_name/${offspring}_noin_AG.txt";
 print FILE1 "site\tref\tALT\tfather\tmother\n";
 print FILE2 "site\tref\tALT\tfather\tmother\n";
 print FILE3 "site\tref\tALT\tfather\tmother\n";
