@@ -2,9 +2,9 @@
 $project_name=$ARGV[0];
 $offspring=$ARGV[1];
 $reference=$ARGV[2];
-$file1="./$project_name/$offspring/merge_offtarget_sites.txt";
+$file1="./$project_name/${offspring}_merge_offtarget_sites.txt";
 open(FD,"$file1")||die("Can not open the file!$!n");
-open FILE1, ">./$project_name/$offspring/final_result.txt";
+open FILE1, ">./$project_name/${offspring}_final_result.txt";
 
 @base=("A","T","C","G");
 $i=1;
