@@ -137,7 +137,11 @@ foreach $member(keys %member_tree){
 		#5. Print Recalibrated Reads
 		`$java -Xmx20g -jar $gatk4 ApplyBQSR -bqsr "./$project_name/$member/$member.BQSR.metrics" -I "./$project_name/$member/$member.sorted.RG.markdup.bam" -O "./$project_name/$member/$member.sorted.RG.markdup.BQSR.bam" `;
 		#6. Genotype Caller 
-		`$java -Xmx20g -jar $gatk -glm INDEL -R $reference -T UnifiedGenotyper -I "./$project_name/$member/$member.sorted.RG.markdup.BQSR.bam" -o "./$project_name/$member/$member.vcf" -metrics "./$project_name/$member/$member.metrics" -stand_call_conf 20 -minIndelFrac 0.03 -minIndelCnt 2`; 
+		if($member eq 'father' || $member eq 'mother '){
+		    `$java -Xmx20g -jar $gatk -glm INDEL -R $reference -T UnifiedGenotyper -I "./$project_name/$member/$member.sorted.RG.markdup.BQSR.bam" -o "./$project_name/$member/$member.vcf" -metrics "./$project_name/$member/$member.metrics" -stand_call_conf 20 -minIndelFrac 0.01 -minIndelCnt 1`; 
+		}else {
+  		    `$java -Xmx20g -jar $gatk -glm INDEL -R $reference -T UnifiedGenotyper -I "./$project_name/$member/$member.sorted.RG.markdup.BQSR.bam" -o "./$project_name/$member/$member.vcf" -metrics "./$project_name/$member/$member.metrics" -stand_call_conf 20 -minIndelFrac 0.2 -minIndelCnt 2`; 
+		}
 		# 7. remove temp files
 		`rm ./$project_name/$member/$member.sorted.RG.bam`;
 		`rm ./$project_name/$member/$member.sorted.RG.markdup.bam`;
